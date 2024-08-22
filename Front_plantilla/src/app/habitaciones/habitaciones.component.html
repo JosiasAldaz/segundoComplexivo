@@ -1,0 +1,122 @@
+<div class="table-container">
+  <div class="table-responsive">
+    <!-- Buscador encima de la tabla -->
+    <div class="search-container" style="margin-bottom: 10px; display: flex; align-items: center;">
+      <input
+        type="text" 
+        [(ngModel)]="searchTerm" 
+        (ngModelChange)="filtrarBusqueda()" 
+        placeholder="Buscar..." 
+        class="form-control search-input"
+        style="background-color: #fff; border-radius: 25px; border: 1px solid #ccc; flex-grow: 1;"
+      />
+      <button class="btn btn-secondary" style="margin-left: 10px;" (click)="createPdf()">
+        <i class="fas fa-file-pdf"></i>PDF
+      </button>
+    </div>
+    <table class="table table-striped table-bordered">
+      <!--AQUI NECESITO UN BOTON PARA GENERAR EL PDF-->
+      <thead class="thead-dark">
+        <tr>
+          <th scope="col">ID ESTUDIANTE</th>
+          <th scope="col">CEDULA</th>
+          <th scope="col">NOMBRE</th>
+          <th scope="col">APELLIDO</th>
+          <th scope="col">CATEGORIA</th>
+          <th scope="col">DIRECCION</th>
+          <th scope="col">FECHA MATRICULA</th>
+          <th scope="col">ACCIONES</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let habitacion of filteredHabitaciones">
+          <td>{{ habitacion.id_estudiante }}</td>
+          <td>{{ habitacion.cedula }}</td>
+          <td>{{ habitacion.nombre }}</td>
+          <td>{{ habitacion.apellido }}</td>
+          <td>{{ habitacion.categoria }}</td>
+          <td>{{ habitacion.direccion }}</td>
+          <td>{{ habitacion.fecha_matricula }}</td>
+          <td>
+            <button class="btn btn-primary btn-sm" (click)="editar(habitacion)">
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-danger btn-sm" (click)="eliminar(habitacion.id_estudiante)">
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+<!-- Ventana Flotante para Editar -->
+<div class="modal" *ngIf="isModalOpen">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Editar Estudiante</h2>
+    <form #form="ngForm" >
+      <div class="form-group">
+        <label for="numeroHabitacion">NOMBRE:</label>
+        <input
+          type="text"
+          [(ngModel)]="registroSeleccionado.nombre"
+          name="numeroHabitacion"
+          #numeroHabitacion="ngModel"
+          required
+        />
+        <div *ngIf="numeroHabitacion.invalid && numeroHabitacion.touched">
+          <small class="error">Este campo es obligatorio.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="descripcion">APELLIDO:</label>
+        <input
+          type="text"
+          [(ngModel)]="registroSeleccionado.apellido"
+          name="descripcion"
+          #descripcion="ngModel"
+          required
+        />
+        <div *ngIf="descripcion.invalid && descripcion.touched">
+          <small class="error">Este campo es obligatorio.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="estado">DIRECCION:</label>
+        <input
+          type="text"
+          [(ngModel)]="registroSeleccionado.direccion"
+          name="estado"
+          #estado="ngModel"
+          required
+        />
+        <div *ngIf="estado.invalid && estado.touched">
+          <small class="error">Este campo es obligatorio.</small>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="tipoHabitacion" style="display: block; text-align: center; margin-bottom: 5px;">HORARIO:</label>
+        <select
+          name="tipoHabitacion"
+          [(ngModel)]="registroSeleccionado.categoria"
+          #tipoHabitacion="ngModel"
+          required
+          style="border-radius: 25px; padding: 10px 15px; border: 1px solid #ccc; width: 100%; box-sizing: border-box;"
+        >
+          <option value="" disabled selected>Selecciona un horario</option>
+          <option value="Disponible">Matutina</option>
+          <option value="Ocupada">Nocturna</option>
+          <option value="Mantenimiento">Dual</option>
+        </select>
+        <div *ngIf="tipoHabitacion.invalid && tipoHabitacion.touched">
+          <small class="error">Este campo es obligatorio.</small>
+        </div>
+      </div>
+      <button type="submit" class="submit-btn" id="modalSubmitBtn" [disabled]="form.invalid"  (click)="guardarCambios(habitacion)">Guardar Cambios</button>
+    </form>
+  </div>
+</div>

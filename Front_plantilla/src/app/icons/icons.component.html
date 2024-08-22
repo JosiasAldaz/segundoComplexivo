@@ -1,0 +1,83 @@
+<div class="bg-light dark:bg-transparent min-vh-100 d-flex flex-row align-items-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-9 col-xl-6">
+        <div class="card mx-4">
+          <div class="card-body p-4">
+            <!-- register.component.html -->
+            <form>
+              <h3>REGISTRO DE ESTUDIANTES</h3>
+              <p class="text-body-secondary">CREAR</p>
+            
+              <div class="input-group mb-3">
+                <input
+                  name="numeroHabitacion"
+                  [(ngModel)]="cedula"
+                  #cedulaInput="ngModel"
+                  required
+                  class="form-control"
+                  placeholder="Cédula"
+                />
+              </div>
+            
+              <div class="input-group mb-3">
+                <input
+                  name="nombre"
+                  [(ngModel)]="nombre"
+                  #nombreInput="ngModel"
+                  required
+                  class="form-control"
+                  placeholder="Nombre"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <input
+                  name="apellido"
+                  [(ngModel)]="apellido"
+                  #apellidoInput="ngModel"
+                  required
+                  class="form-control"
+                  placeholder="Apellido"
+                />
+              </div>
+
+              <div class="input-group mb-3">
+                <select
+                  name="categoria"
+                  [(ngModel)]="horario"
+                  #categoriaInput="ngModel"
+                  required
+                  class="form-control"
+                  placeholder="Tipo de Habitación"
+                >
+                  <option value="" disabled selected>Selecciona un horario</option>
+                  <option value="Disponible">Matutina</option>
+                  <option value="Ocupada">Nocturna</option>
+                  <option value="Mantenimiento">Dual</option>
+                </select>
+              </div>
+            
+              <div class="input-group mb-3">
+                <input
+                  name="direccion"
+                  [(ngModel)]="direccion"
+                  #direccionInput="ngModel"
+                  required
+                  class="form-control"
+                  placeholder="Direccion"
+                />
+              </div>
+            
+              <div class="d-grid">
+                <button (click)="Registrar()" class="btn btn-success" type="submit">Create Estudiante</button>
+              </div><br>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
